@@ -56,7 +56,7 @@
       ;; list all external symbols     
       (let ((index 1))
         (dolist (name sorted-names)
-          (format s "~d. [~A](#~A)~%" index name name)
+          (format s "~d. [~A](#~A)~%" index name (string-downcase name))
           (incf index)))
       (format s "~%~%")
       ;; describe all external symbols
@@ -68,7 +68,7 @@
         (format s "```~%")))))
 
 
-;; get describe output as a string
+;; get describe output as a string :EXPORT
 (defun describe-symbol (name)
   "Describe a symbol and return the output as a string"
   (with-output-to-string (s)
@@ -81,17 +81,17 @@
   (search s name :test #'char-equal))
 
 ;; search for string in symbol names and doc strings
-(defun search-symbol-in-package (package name &key (doc-string t))
+(defun search-symbols (name package &key (doc-string nil))
   "Search for string in symbol names and doc strings in a package"
   (let ((result '()))
     (do-external-symbols (s package result)
       (when (or (search-ignore-case name (symbol-name s))
                 (and doc-string
-                     (search-ignore-case name (describe-str s))))
+                     (search-ignore-case name (describe-symbol s))))
             (push s result)))))
 
 
-;; format markdown for symbol list
+;; format markdown for symbol list :EXPORT
 (defun format-descriptions (name-list &optional (start-level 1))
   "Format a list of symbol names as markdown, with optional start level for headers"
   (with-output-to-string (s)
@@ -99,7 +99,7 @@
       (markdown-nth-header start-level))
     (let ((index 1))
       (dolist (name name-list)
-        (format s "~d. [~A](#~A)~%" index name name)
+        (format s "~d. [~A](#~A)~%" index name (string-downcase name))
         (incf index)))
     (format s "~%~%")
     (dolist (name name-list)
@@ -110,8 +110,8 @@
       (format s "~%```~%~%"))))
 
 
-;; save symbol list to a file
+;; save symbol list to a file :EXPORT
 (defun export-descriptions (name-list fn &optional (start-level 1))
   "Save a list of symbol names to a file"
   (with-open-stream (s (open fn :direction :output :if-exists :supersede))
-    (format s "~A~%" (format-symbol-list name-list start-level))))
+    (format s "~A~%" (format-descriptions name-list start-level))))

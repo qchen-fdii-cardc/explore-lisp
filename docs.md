@@ -1,11 +1,12 @@
 ## EL external symbols
 
 
-1. [DESCRIBE-SYMBOL](#DESCRIBE-SYMBOL)
-2. [DIR](#DIR)
-3. [EXPORT-ALL-EXTERNAL-SYMBOLS](#EXPORT-ALL-EXTERNAL-SYMBOLS)
-4. [EXPORT-DESCRIPTIONS](#EXPORT-DESCRIPTIONS)
-5. [FORMAT-DESCRIPTIONS](#FORMAT-DESCRIPTIONS)
+1. [DESCRIBE-SYMBOL](#describe-symbol)
+2. [DIR](#dir)
+3. [EXPORT-ALL-EXTERNAL-SYMBOLS](#export-all-external-symbols)
+4. [EXPORT-DESCRIPTIONS](#export-descriptions)
+5. [FORMAT-DESCRIPTIONS](#format-descriptions)
+6. [SEARCH-SYMBOLS](#search-symbols)
 
 
 ###  `DESCRIBE-SYMBOL`
@@ -46,42 +47,7 @@ EXPORT-ALL-EXTERNAL-SYMBOLS names a compiled function:
                  (VALUES NULL &OPTIONAL))
   Documentation:
     List all external symbols in a package and their doc strings into a file ~package~.md
-  Source form:
-    (LAMBDA
-        (PACKAGE
-         &KEY (EXPLORE-LISP::FN "" EXPLORE-LISP::FN-P)
-         (EXPLORE-LISP::START-LEVEL 1))
-      "List all external symbols in a package and their doc strings into a file ~package~.md"
-      (BLOCK EXPLORE-LISP:EXPORT-ALL-EXTERNAL-SYMBOLS
-        (LET ((EXPLORE-LISP::SORTED-NAMES
-               (EXPLORE-LISP::SORT-SYMBOLS (EXPLORE-LISP:DIR PACKAGE)))
-              (EXPLORE-LISP::_FN
-               (IF EXPLORE-LISP::FN-P
-                   EXPLORE-LISP::FN
-                   (FORMAT NIL "~a.md" PACKAGE))))
-          (WITH-OPEN-STREAM
-              (EXPLORE-LISP::S
-               (OPEN EXPLORE-LISP::_FN :DIRECTION :OUTPUT :IF-EXISTS
-                     :SUPERSEDE))
-            (FORMAT EXPLORE-LISP::S "~A ~A external symbols~%~%~%"
-                    (EXPLORE-LISP::MARKDOWN-NTH-HEADER
-                     EXPLORE-LISP::START-LEVEL)
-                    PACKAGE)
-            (LET ((EXPLORE-LISP::INDEX 1))
-              (DOLIST (EXPLORE-LISP::NAME EXPLORE-LISP::SORTED-NAMES)
-                (FORMAT EXPLORE-LISP::S "~d. [~A](#~A)~%"
-                        EXPLORE-LISP::INDEX EXPLORE-LISP::NAME
-                        EXPLORE-LISP::NAME)
-                (INCF EXPLORE-LISP::INDEX)))
-            (FORMAT EXPLORE-LISP::S "~%~%")
-            (DOLIST (EXPLORE-LISP::NAME EXPLORE-LISP::SORTED-NAMES)
-              (FORMAT EXPLORE-LISP::S "~A  `~A`~%~%"
-                      (EXPLORE-LISP::MARKDOWN-NTH-HEADER
-                       (+ 1 EXPLORE-LISP::START-LEVEL))
-                      EXPLORE-LISP::NAME)
-              (FORMAT EXPLORE-LISP::S "```lisp~%")
-              (DESCRIBE EXPLORE-LISP::NAME EXPLORE-LISP::S)
-              (FORMAT EXPLORE-LISP::S "```~%"))))))
+  Source file: C:/Users/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ###  `EXPORT-DESCRIPTIONS`
 
@@ -108,5 +74,19 @@ FORMAT-DESCRIPTIONS names a compiled function:
                  (VALUES SIMPLE-STRING &OPTIONAL))
   Documentation:
     Format a list of symbol names as markdown, with optional start level for headers
+  Source file: C:/Users/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+```
+###  `SEARCH-SYMBOLS`
+
+```lisp
+EXPLORE-LISP:SEARCH-SYMBOLS
+  [symbol]
+
+SEARCH-SYMBOLS names a compiled function:
+  Lambda-list: (NAME PACKAGE &KEY (DOC-STRING NIL))
+  Derived type: (FUNCTION (T T &KEY (:DOC-STRING T))
+                 (VALUES LIST &OPTIONAL))
+  Documentation:
+    Search for string in symbol names and doc strings in a package
   Source file: C:/Users/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
