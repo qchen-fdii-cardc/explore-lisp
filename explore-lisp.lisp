@@ -23,7 +23,7 @@
     result))
 
 
-;; list all external symbols in a package
+;; list all external symbols in a package  :EXPORT
 (defun dir (package)
   "List all external symbols in a package, return a list of symbol names and its length"
   (let ((result '())
@@ -33,14 +33,26 @@
       (push s result)
       (incf len))))
 
-;; print all symbols and doc strings in a file
-(defun dir-package (package)
+
+(defun sort-symbols (names)
+  "Sort a list of symbol names"
+  (sort names #'string-lessp))
+
+; (search-symbol-in-package 'cl "sup" :doc-string nil)
+(defun markdown-nth-header (n)
+  "Return a string of n sharp characters for markdown headers"
+  (make-string n :initial-element #\#))
+
+;; print all symbols and doc strings in a file :EXPORT
+(defun export-all-external-symbols
+    (package &key (fn "" fn-p) (start-level 1))
   "List all external symbols in a package and their doc strings into a file ~package~.md"
-  (let ((sorted-names (sort (dir package) #'string<))
-        (fn (format nil "~a.md" package)))
-    (with-open-stream (s (open fn :direction :output :if-exists :supersede))
+  (let ((sorted-names (sort-symbols (dir package)))
+        (_fn (if fn-p fn (format nil "~a.md" package))))
+    (with-open-stream (s (open _fn :direction :output :if-exists :supersede))
       ;; header line
-      (format s "# ~a external symbols~%~%~%" package)
+      (format s "~A ~A external symbols~%~%~%"
+        (markdown-nth-header start-level) package)
       ;; list all external symbols     
       (let ((index 1))
         (dolist (name sorted-names)
@@ -49,14 +61,15 @@
       (format s "~%~%")
       ;; describe all external symbols
       (dolist (name sorted-names)
-        (format s "##  `~a`~%~%" name)
+        (format s "~A  `~A`~%~%"
+          (markdown-nth-header (+ 1 start-level)) name)
         (format s "```lisp~%")
         (describe name s)
         (format s "```~%")))))
 
 
 ;; get describe output as a string
-(defun describe-str (name)
+(defun describe-symbol (name)
   "Describe a symbol and return the output as a string"
   (with-output-to-string (s)
     (describe name s)
@@ -64,7 +77,7 @@
 
 
 (defun search-ignore-case (s name)
-  "Search for a string in a case-insensitive way"
+  "Search for a string `s` in `name` in a case-insensitive way"
   (search s name :test #'char-equal))
 
 ;; search for string in symbol names and doc strings
@@ -77,14 +90,9 @@
                      (search-ignore-case name (describe-str s))))
             (push s result)))))
 
-; (search-symbol-in-package 'cl "sup" :doc-string nil)
-
-(defun markdown-nth-header (n)
-  "Return a string of n sharp characters for markdown headers"
-  (make-string n :initial-element #\#))
 
 ;; format markdown for symbol list
-(defun format-symbol-list (name-list &optional (start-level 1))
+(defun format-descriptions (name-list &optional (start-level 1))
   "Format a list of symbol names as markdown, with optional start level for headers"
   (with-output-to-string (s)
     (format s "~A Symbol list~%~%"
@@ -103,7 +111,7 @@
 
 
 ;; save symbol list to a file
-(defun save-symbol-list (name-list fn &optional (start-level 1))
+(defun export-descriptions (name-list fn &optional (start-level 1))
   "Save a list of symbol names to a file"
   (with-open-stream (s (open fn :direction :output :if-exists :supersede))
-    (format s (format-symbol-list name-list start-level))))
+    (format s "~A~%" (format-symbol-list name-list start-level))))
