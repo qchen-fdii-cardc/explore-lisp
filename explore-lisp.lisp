@@ -8,10 +8,9 @@
       (find-package (string-upcase name))
       (find-package name)))
 
-
 (defun part-in-list-p (part list)
   "Return true if any element of list contains part"
-  (find-if (lambda (x) (search part x)) list))
+  (find-if #'(lambda (x) (search part x)) list))
 
 (defun find-package-with-part (part)
   "Find a package by part of its name or nickname"
@@ -26,6 +25,7 @@
 
 ;; list all external symbols in a package
 (defun dir (package)
+  "List all external symbols in a package, return a list of symbol names and its length"
   (let ((result '())
         (len 0))
     (do-external-symbols (s package (values result len))
@@ -35,7 +35,7 @@
 
 ;; print all symbols and doc strings in a file
 (defun dir-package (package)
-  "List all external symbols in a package and their doc strings in a file"
+  "List all external symbols in a package and their doc strings into a file ~package~.md"
   (let ((sorted-names (sort (dir package) #'string<))
         (fn (format nil "~a.md" package)))
     (with-open-stream (s (open fn :direction :output :if-exists :supersede))
@@ -59,13 +59,13 @@
 (defun describe-str (name)
   "Describe a symbol and return the output as a string"
   (with-output-to-string (s)
-    (cl:describe name s)
+    (describe name s)
     s))
 
 
 (defun search-ignore-case (s name)
   "Search for a string in a case-insensitive way"
-  (search (string-upcase s) (string-upcase name)))
+  (search s name :test #'char-equal))
 
 ;; search for string in symbol names and doc strings
 (defun search-symbol-in-package (package name &key (doc-string t))
@@ -77,62 +77,33 @@
                      (search-ignore-case name (describe-str s))))
             (push s result)))))
 
-(search-symbol-in-package 'cl "string" :doc-string nil)
+; (search-symbol-in-package 'cl "sup" :doc-string nil)
+
+(defun markdown-nth-header (n)
+  "Return a string of n sharp characters for markdown headers"
+  (make-string n :initial-element #\#))
 
 ;; format markdown for symbol list
-(defun format-symbol-list (name-list)
-  "Format a list of symbol names as markdown"
+(defun format-symbol-list (name-list &optional (start-level 1))
+  "Format a list of symbol names as markdown, with optional start level for headers"
   (with-output-to-string (s)
-    (format s "# Symbol list~%~%")
+    (format s "~A Symbol list~%~%"
+      (markdown-nth-header start-level))
     (let ((index 1))
       (dolist (name name-list)
         (format s "~d. [~A](#~A)~%" index name name)
         (incf index)))
     (format s "~%~%")
     (dolist (name name-list)
-      (format s "## `~a`~%~%" name)
+      (format s "~A `~A`~%~%"
+        (markdown-nth-header (+ start-level 1)) name)
       (format s "```lisp~%")
       (describe name s)
       (format s "~%```~%~%"))))
 
-(format-symbol-list '(car cdr cons))
-
-(with-open-stream
-    (s (open "symbol-list.md" :direction :output :if-exists :supersede))
-  (format s (format-symbol-list '(car cdr cons))))
-
 
 ;; save symbol list to a file
-(defun save-symbol-list (name-list fn)
+(defun save-symbol-list (name-list fn &optional (start-level 1))
   "Save a list of symbol names to a file"
   (with-open-stream (s (open fn :direction :output :if-exists :supersede))
-    (format s (format-symbol-list name-list))))
-
-(save-symbol-list
- (sort
-     (search-symbol-in-package 'cl "value" :doc-string nil) 'string<)
- "value.md")
-
-
-(defun sort-symbols (names)
-  "Sort a list of symbol names"
-  (sort names #'string<))
-
-(sort-symbols (search-symbol-in-package 'cl "string" :doc-string nil))
-
-;; defin a macro to print name and value
-(defmacro print-name-value (name)
-  `(format t "~a ==> ~a~%" ',name ,name))
-
-
-(with-open-file
-    (s "symbol-list.md" :direction :output :if-exists :supersede)
-  (print-name-value (enough-namestring s))
-  (print-name-value (pathname s))
-  (print-name-value (truename s))
-  (print-name-value (file-namestring s))
-  (print-name-value (file-string-length s "string-list.md"))
-  (print-name-value (directory-namestring s))
-  (print-name-value (namestring s))
-  (print-name-value (nstring-capitalize (namestring s)))
-  (print-name-value (probe-file s)))
+    (format s (format-symbol-list name-list start-level))))

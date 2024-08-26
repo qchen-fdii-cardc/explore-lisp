@@ -8,4 +8,5 @@
   :serial t
   :depends-on (#:cl)
   :components ((:file "package")
+               (:file "utils")
                (:file "explore-lisp")))
