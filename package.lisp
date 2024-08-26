@@ -7,4 +7,5 @@
            :dir
            :describe-symbol
            :format-descriptions
-           :export-descriptions))
+           :export-descriptions
+           :search-symbols))
