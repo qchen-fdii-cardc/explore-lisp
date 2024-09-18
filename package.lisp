@@ -8,4 +8,5 @@
            :describe-symbol
            :format-descriptions
            :export-descriptions
-           :search-symbols))
+           :search-symbols
+           :export-all-external-symbols-to-stream))

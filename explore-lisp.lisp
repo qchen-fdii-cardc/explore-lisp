@@ -68,6 +68,29 @@
         (format s "```~%")))))
 
 
+;; print all symbols and doc strings in a file :EXPORT
+(defun export-all-external-symbols-to-stream
+    (package s &key (start-level 1))
+  "List all external symbols in a package and their doc strings into a file ~package~.md"
+  (let ((sorted-names (sort-symbols (dir package))))
+    ;; header line
+    (format s "~A ~A external symbols~%~%~%"
+      (markdown-nth-header start-level) package)
+    ;; list all external symbols     
+    (let ((index 1))
+      (dolist (name sorted-names)
+        (format s "~d. [~A](#~A)~%" index name (string-downcase name))
+        (incf index)))
+    (format s "~%~%")
+    ;; describe all external symbols
+    (dolist (name sorted-names)
+      (format s "~A  `~A`~%~%"
+        (markdown-nth-header (+ 1 start-level)) name)
+      (format s "```lisp~%")
+      (describe name s)
+      (format s "```~%"))))
+
+
 ;; get describe output as a string :EXPORT
 (defun describe-symbol (name)
   "Describe a symbol and return the output as a string"
