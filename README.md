@@ -4,6 +4,8 @@
 # explore-lisp
 ### _Dafu Chen <qchen2015@hotmail.com>_
 
+[Github Repository](https://github.com/qchen-fdii-cardc/explore-lisp)
+
 参考博客文章：
 
 - [Common Lisp文档和符号探索](https://www.windtunnel.cn/posts/005-explore-lisp/)
