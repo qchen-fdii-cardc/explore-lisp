@@ -132,7 +132,7 @@
         "No documentation found")))
 
 ;; lookfor
-(defun lookfor (name &optional (output t) (doc-string t))
+(defun lookfor (name &optional (doc-string t) (output t))
   "Look for symbols in all installed packages that contain `name`"
   (let ((packages (list-all-packages))
         (names '()))

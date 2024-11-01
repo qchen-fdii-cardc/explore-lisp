@@ -98,7 +98,7 @@ EXPLORE-LISP:LOOKFOR
   [symbol]
 
 LOOKFOR names a compiled function:
-  Lambda-list: (NAME &OPTIONAL (OUTPUT T) (DOC-STRING T))
+  Lambda-list: (NAME &OPTIONAL (DOC-STRING T) (OUTPUT T))
   Derived type: (FUNCTION (T &OPTIONAL T T)
                  (VALUES (UNSIGNED-BYTE 38) LIST &OPTIONAL))
   Documentation:

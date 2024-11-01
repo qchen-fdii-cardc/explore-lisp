@@ -117,10 +117,12 @@ git clone https://github.com/qchen-fdii-cardc/explore-lisp
 (el:lookfor "map")
 ```
 
-会默认搜索所有安装的包，包含了文档和符号名称，最后打印出名称和一句话文档（如果有的话）。当然也可以只搜索符号名称。额外提供两个参数，第一个是是否打印的开关，第二个是是否搜索文档的开关。
+会默认搜索所有安装的包，包含了文档和符号名称，最后打印出名称和一句话文档（如果有的话）。
+
+当然也可以只搜索符号名称。额外提供两个参数，第一个是是否搜索文档的开关，第二个是是否打印的开关。
 
 ```lisp
-(el:lookfor "map" t nil)
+(el:lookfor "map" nil)
 ```
 
 当然，默认返回的第一个参数是找到的符号的数量，第二返回值是所有符号的列表。
@@ -128,6 +130,8 @@ git clone https://github.com/qchen-fdii-cardc/explore-lisp
 ```lisp
 (nth-value 1 (el:lookfor "map"))
 ```
+
+采用这样`(values num lst)`的输出形式，在REPL中，运行`lookfor`函数，就只输出符号的数量，而不会输出符号的列表。
 
 这样，就能配合其他函数，输出需要的信息。
 
@@ -139,7 +143,8 @@ git clone https://github.com/qchen-fdii-cardc/explore-lisp
 
 ## Logs
 
-2024/11/1： 增加一个
+- 2024/10/31： 增加`export-all-external-symbols-to-stream`函数文档，重写`README.md`。
+- 2024/11/1： 增加一个`lookfor`函数，可以搜索包中的符号，类似于Matlab的`lookfor`函数。
 ## License
 
 MIT
