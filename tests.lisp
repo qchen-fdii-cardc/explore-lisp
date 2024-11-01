@@ -1,23 +1,15 @@
 (in-package #:explore-lisp)
 
+(defun format-symbol-list (symbols indent)
+  "Formats a list of symbols with the given indent."
+  (mapconcat (lambda (sym) (format nil "~vT~A" indent sym)) symbols #\Newline))
+
 (dir 'explore-lisp)
-
-;; usage example
-(format-symbol-list '(car cdr cons) 2)
-
-(with-open-stream
-    (s (open "output/symbol-list.md" :direction :output :if-exists :supersede))
-  (format s (format-symbol-list '(car cdr cons))))
-
-(save-symbol-list
-  (sort
-      (search-symbol-in-package 'cl "value" :doc-string nil) 'string-lessp)
-  "output/value.md")
 
 
 (dir 'el)
 (eq (first (dir 'el)) 'dir)
-(dir-package 'el)
+(dir 'el)
 (type-of (first (dir 'el)))
 (type-of 'dir)
 (fboundp (first (dir 'el)))
@@ -29,29 +21,9 @@
 
 
 (format-symbol-list '(dir) 2)
-(save-symbol-list (sort-symbols (dir 'el)) "output/el.md" 2)
+
 
 (describe 'dir)
-
-(save-symbol-list
-  (sort-symbols (search-symbol-in-package 'cl "string" :doc-string nil))
-  "output/string.md")
-
-(save-symbol-list
-  (sort-symbols
-    '(concatenate length remove
-       copy-seq map remove-duplicates count map-into remove-if
-       count-if merge remove-if-not count-if-not mismatch replace
-       delete notany reverse
-       delete-duplicates notevery search
-       delete-if nreverse some
-       delete-if-not nsubstitute sort
-       elt nsubstitute-if stable-sort
-       every nsubstitute-if-not subseq
-       fill position substitute
-       find position-if substitute-if
-       find-if position-if-not substitute-if-not find-if-not reduce))
-  "output/sequence.md" 2)
 
 
 (with-open-file
@@ -65,3 +37,18 @@
   (print-name-value (namestring s))
   (print-name-value (nstring-capitalize (namestring s)))
   (print-name-value (probe-file s)))
+
+
+(lookfor "sequence" nil)
+
+(one-sentence-doc 'mapcar)
+
+(describe 'lookfor)
+
+(format-descriptions (nth-value 1 (lookfor "sequence" nil nil)))
+
+
+(nth-value 1 (lookfor "string" nil nil))
+
+
+(lookfor "string" nil nil)

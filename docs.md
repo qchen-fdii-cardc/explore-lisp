@@ -1,4 +1,5 @@
-## EL external symbols
+# EL external symbols
+
 
 1. [DESCRIBE-SYMBOL](#describe-symbol)
 2. [DIR](#dir)
@@ -6,10 +7,11 @@
 4. [EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM](#export-all-external-symbols-to-stream)
 5. [EXPORT-DESCRIPTIONS](#export-descriptions)
 6. [FORMAT-DESCRIPTIONS](#format-descriptions)
-7. [SEARCH-SYMBOLS](#search-symbols)
+7. [LOOKFOR](#lookfor)
+8. [SEARCH-SYMBOLS](#search-symbols)
 
 
-## `DESCRIBE-SYMBOL`
+##  `DESCRIBE-SYMBOL`
 
 ```lisp
 EXPLORE-LISP:DESCRIBE-SYMBOL
@@ -21,10 +23,8 @@ DESCRIBE-SYMBOL names a compiled function:
   Documentation:
     Describe a symbol and return the output as a string
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
-
-## `DIR`
+##  `DIR`
 
 ```lisp
 EXPLORE-LISP:DIR
@@ -36,10 +36,8 @@ DIR names a compiled function:
   Documentation:
     List all external symbols in a package, return a list of symbol names and its length
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
-
-## `EXPORT-ALL-EXTERNAL-SYMBOLS`
+##  `EXPORT-ALL-EXTERNAL-SYMBOLS`
 
 ```lisp
 EXPLORE-LISP:EXPORT-ALL-EXTERNAL-SYMBOLS
@@ -47,15 +45,12 @@ EXPLORE-LISP:EXPORT-ALL-EXTERNAL-SYMBOLS
 
 EXPORT-ALL-EXTERNAL-SYMBOLS names a compiled function:
   Lambda-list: (PACKAGE &KEY (FN  FN-P) (START-LEVEL 1))
-  Derived type: (FUNCTION (T &KEY (:FN T) (:START-LEVEL T))
-                 (VALUES NULL &OPTIONAL))
+  Derived type: (FUNCTION (T &KEY (:FN T) (:START-LEVEL T)) *)
   Documentation:
     List all external symbols in a package and their doc strings into a file ~package~.md
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
-
-## `EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM`
+##  `EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM`
 
 ```lisp
 EXPLORE-LISP:EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM
@@ -66,12 +61,10 @@ EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM names a compiled function:
   Derived type: (FUNCTION (T T &KEY (:START-LEVEL T))
                  (VALUES NULL &OPTIONAL))
   Documentation:
-    List all external symbols in a package and their doc strings into a file ~package~.md
+    List all external symbols in a package and their doc strings into a stream ~s~
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
-
-## `EXPORT-DESCRIPTIONS`
+##  `EXPORT-DESCRIPTIONS`
 
 ```lisp
 EXPLORE-LISP:EXPORT-DESCRIPTIONS
@@ -83,10 +76,8 @@ EXPORT-DESCRIPTIONS names a compiled function:
   Documentation:
     Save a list of symbol names to a file
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
-
-## `FORMAT-DESCRIPTIONS`
+##  `FORMAT-DESCRIPTIONS`
 
 ```lisp
 EXPLORE-LISP:FORMAT-DESCRIPTIONS
@@ -99,10 +90,22 @@ FORMAT-DESCRIPTIONS names a compiled function:
   Documentation:
     Format a list of symbol names as markdown, with optional start level for headers
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```
+##  `LOOKFOR`
 
-## `SEARCH-SYMBOLS`
+```lisp
+EXPLORE-LISP:LOOKFOR
+  [symbol]
+
+LOOKFOR names a compiled function:
+  Lambda-list: (NAME &OPTIONAL (OUTPUT T) (DOC-STRING T))
+  Derived type: (FUNCTION (T &OPTIONAL T T)
+                 (VALUES (UNSIGNED-BYTE 38) LIST &OPTIONAL))
+  Documentation:
+    Look for symbols in all installed packages that contain `name`
+  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+```
+##  `SEARCH-SYMBOLS`
 
 ```lisp
 EXPLORE-LISP:SEARCH-SYMBOLS
@@ -115,5 +118,4 @@ SEARCH-SYMBOLS names a compiled function:
   Documentation:
     Search for string in symbol names and doc strings in a package
   Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
-
 ```

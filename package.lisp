@@ -3,10 +3,11 @@
 (defpackage #:explore-lisp
   (:nicknames :el)
   (:use #:cl)
-  (:export :export-all-external-symbols
+  (:export :describe-symbol
            :dir
-           :describe-symbol
-           :format-descriptions
            :export-descriptions
-           :search-symbols
-           :export-all-external-symbols-to-stream))
+           :export-all-external-symbols-to-stream
+           :export-all-external-symbols
+           :format-descriptions
+           :lookfor
+           :search-symbols))
