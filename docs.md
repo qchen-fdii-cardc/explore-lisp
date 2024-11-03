@@ -22,7 +22,7 @@ DESCRIBE-SYMBOL names a compiled function:
   Derived type: (FUNCTION (T) (VALUES SIMPLE-STRING &OPTIONAL))
   Documentation:
     Describe a symbol and return the output as a string
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `DIR`
 
@@ -35,7 +35,7 @@ DIR names a compiled function:
   Derived type: (FUNCTION (T) (VALUES LIST UNSIGNED-BYTE &OPTIONAL))
   Documentation:
     List all external symbols in a package, return a list of symbol names and its length
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `EXPORT-ALL-EXTERNAL-SYMBOLS`
 
@@ -48,7 +48,7 @@ EXPORT-ALL-EXTERNAL-SYMBOLS names a compiled function:
   Derived type: (FUNCTION (T &KEY (:FN T) (:START-LEVEL T)) *)
   Documentation:
     List all external symbols in a package and their doc strings into a file ~package~.md
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM`
 
@@ -62,7 +62,7 @@ EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM names a compiled function:
                  (VALUES NULL &OPTIONAL))
   Documentation:
     List all external symbols in a package and their doc strings into a stream ~s~
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `EXPORT-DESCRIPTIONS`
 
@@ -72,10 +72,11 @@ EXPLORE-LISP:EXPORT-DESCRIPTIONS
 
 EXPORT-DESCRIPTIONS names a compiled function:
   Lambda-list: (NAME-LIST FN &OPTIONAL (START-LEVEL 1))
-  Derived type: (FUNCTION (T T &OPTIONAL T) (VALUES NULL &OPTIONAL))
+  Derived type: (FUNCTION (T T &OPTIONAL T)
+                 (VALUES (OR STRING NULL) &OPTIONAL))
   Documentation:
     Save a list of symbol names to a file
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `FORMAT-DESCRIPTIONS`
 
@@ -89,7 +90,7 @@ FORMAT-DESCRIPTIONS names a compiled function:
                  (VALUES SIMPLE-STRING &OPTIONAL))
   Documentation:
     Format a list of symbol names as markdown, with optional start level for headers
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `LOOKFOR`
 
@@ -98,12 +99,17 @@ EXPLORE-LISP:LOOKFOR
   [symbol]
 
 LOOKFOR names a compiled function:
-  Lambda-list: (NAME &OPTIONAL (DOC-STRING T) (OUTPUT T))
-  Derived type: (FUNCTION (T &OPTIONAL T T)
-                 (VALUES (UNSIGNED-BYTE 38) LIST &OPTIONAL))
+  Lambda-list: (NAME &OPTIONAL (DOC-STRING NIL) (OUTPUT T)
+                (PACKAGES NIL))
+  Derived type: (FUNCTION (T &OPTIONAL T T T)
+                 (VALUES (MOD 4611686018427387901) LIST &OPTIONAL))
   Documentation:
-    Look for symbols in all installed packages that contain `name`
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+    Look for symbols in common-lisp (default)/all installed packages (packages = :all) that contain `name`
+      doc-string: search in doc strings if t (default is nil)
+      output: print the result if t (default is t)
+      packages: set to :ALL list of packages to search, default is nil for just common-lisp
+
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `SEARCH-SYMBOLS`
 
@@ -117,5 +123,5 @@ SEARCH-SYMBOLS names a compiled function:
                  (VALUES LIST &OPTIONAL))
   Documentation:
     Search for string in symbol names and doc strings in a package
-  Source file: C:/Users/User/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```

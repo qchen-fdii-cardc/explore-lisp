@@ -139,12 +139,17 @@ git clone https://github.com/qchen-fdii-cardc/explore-lisp
 (el:format-descriptions (nth-value 1 (el:lookfor "sequence" nil nil)))
 ```
 
+`lookfor`函数的第三个参数是一个关键字，`:all`表示搜索所有包，否则只搜索`common-lisp`包。
+
+在实际的使用中，发现这么做才更加自然。
+
 大概，常用的函数就是这么一些。
 
 ## Logs
 
-- 2024/10/31： 增加`export-all-external-symbols-to-stream`函数文档，重写`README.md`。
+- 2024/11/3： 更改`lookfor`函数的输入参数，当输入默认参数时，只在`common-lisp`包中搜索，设为`:all`时，搜索所有包，更新函数文档和README.md， 重新生成文档。
 - 2024/11/1： 增加一个`lookfor`函数，可以搜索包中的符号，类似于Matlab的`lookfor`函数。
+- 2024/10/31： 增加`export-all-external-symbols-to-stream`函数文档，重写`README.md`。
 ## License
 
 MIT

@@ -131,14 +131,19 @@
           (string-left-trim (string #\space) (subseq doc start3 end)))
         "No documentation found")))
 
+
 ;; lookfor
-(defun lookfor (name &optional (doc-string t) (output t))
-  "Look for symbols in all installed packages that contain `name`"
-  (let ((packages (list-all-packages))
+(defun lookfor (name &optional (doc-string nil) (output t) (packages nil))
+  "Look for symbols in common-lisp (default)/all installed packages (packages = :all) that contain `name`
+  doc-string: search in doc strings if t (default is nil)
+  output: print the result if t (default is t)
+  packages: set to :ALL list of packages to search, default is nil for just common-lisp
+  "
+  (let ((target-packages (if (eq packages :all) (list-all-packages) (list 'cl)))
         (names '()))
-    (if (null packages)
+    (if (null target-packages)
         (format t "No package found with part ~a~%" name)
-        (loop for package in packages
+        (loop for package in target-packages
               do (let ((symbols (search-symbols name package :doc-string doc-string)))
                    (when (not (null symbols))
                          (loop for symbol in symbols
