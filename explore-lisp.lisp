@@ -151,3 +151,14 @@
                                  when output
                                do (format t "[~a:~a]  ~A~%" (package-name package) symbol (one-sentence-doc symbol)))))))
     (values (length names) names)))
+
+
+(defmacro help (&rest args)
+  "Just another acronym for describe"
+  `(if (or (eql (first (list ,@args)) 'help) (eql (first (list ,@args)) '?))
+       (describe 'describe ,@(rest args))
+       (describe ,@args)))
+
+(defmacro ? (&rest args)
+  "Just another acronym for describe"
+  `(help ,@args))

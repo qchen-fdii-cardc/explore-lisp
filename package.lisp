@@ -10,4 +10,6 @@
            :export-all-external-symbols
            :format-descriptions
            :lookfor
-           :search-symbols))
+           :search-symbols
+           :help
+           :?))
