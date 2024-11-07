@@ -1,16 +1,30 @@
 # EL external symbols
 
 
-1. [DESCRIBE-SYMBOL](#describe-symbol)
-2. [DIR](#dir)
-3. [EXPORT-ALL-EXTERNAL-SYMBOLS](#export-all-external-symbols)
-4. [EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM](#export-all-external-symbols-to-stream)
-5. [EXPORT-DESCRIPTIONS](#export-descriptions)
-6. [FORMAT-DESCRIPTIONS](#format-descriptions)
-7. [LOOKFOR](#lookfor)
-8. [SEARCH-SYMBOLS](#search-symbols)
+1. [?](#?)
+2. [DESCRIBE-SYMBOL](#describe-symbol)
+3. [DIR](#dir)
+4. [EXPORT-ALL-EXTERNAL-SYMBOLS](#export-all-external-symbols)
+5. [EXPORT-ALL-EXTERNAL-SYMBOLS-TO-STREAM](#export-all-external-symbols-to-stream)
+6. [EXPORT-DESCRIPTIONS](#export-descriptions)
+7. [FORMAT-DESCRIPTIONS](#format-descriptions)
+8. [HELP](#help)
+9. [LOOKFOR](#lookfor)
+10. [SEARCH-SYMBOLS](#search-symbols)
 
 
+##  `?`
+
+```lisp
+EXPLORE-LISP:?
+  [symbol]
+
+? names a macro:
+  Lambda-list: (&REST ARGS)
+  Documentation:
+    Just another acronym for describe
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+```
 ##  `DESCRIBE-SYMBOL`
 
 ```lisp
@@ -90,6 +104,18 @@ FORMAT-DESCRIPTIONS names a compiled function:
                  (VALUES SIMPLE-STRING &OPTIONAL))
   Documentation:
     Format a list of symbol names as markdown, with optional start level for headers
+  Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
+```
+##  `HELP`
+
+```lisp
+EXPLORE-LISP:HELP
+  [symbol]
+
+HELP names a macro:
+  Lambda-list: (&REST ARGS)
+  Documentation:
+    Just another acronym for describe
   Source file: /home/qchen/quicklisp/local-projects/explore-lisp/explore-lisp.lisp
 ```
 ##  `LOOKFOR`
