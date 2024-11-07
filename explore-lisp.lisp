@@ -146,7 +146,7 @@
         (loop for package in target-packages
               do (let ((symbols (search-symbols name package :doc-string doc-string)))
                    (when (not (null symbols))
-                         (loop for symbol in symbols
+                         (loop for symbol in (sort symbols #'string-lessp)
                                do (push symbol names)
                                  when output
                                do (format t "[~a:~a]  ~A~%" (package-name package) symbol (one-sentence-doc symbol)))))))
