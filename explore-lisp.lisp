@@ -144,7 +144,7 @@
     (if (null target-packages)
         (format t "No package found with part ~a~%" name)
         (loop for package in target-packages
-              do (let ((symbols (search-symbols name package :doc-string doc-string)))
+              do (let ((symbols (search-symbols (string name) package :doc-string doc-string)))
                    (when (not (null symbols))
                          (loop for symbol in (sort symbols #'string-lessp)
                                do (push symbol names)
