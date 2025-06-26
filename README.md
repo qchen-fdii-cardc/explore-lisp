@@ -8,8 +8,8 @@
 
 参考博客文章：
 
-- [Common Lisp文档和符号探索](https://www.windtunnel.cn/posts/005-explore-lisp/)
-- [Common Lisp项目管理](https://www.windtunnel.cn/posts/002-lazy-process/)
+- [Common Lisp文档和符号探索](https://www.windtunnel.cn/posts/lisp/005-explore-lisp/)
+- [Common Lisp项目管理](https://www.windtunnel.cn/posts/lisp/002-lazy-process/)
 
 ## 介绍
 
